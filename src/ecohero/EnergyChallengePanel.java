@@ -93,8 +93,13 @@ public class EnergyChallengePanel extends JPanel implements ResettableScreen {
         nextButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         nextButton.setBackground(new Color(46, 125, 50));
         nextButton.setForeground(Color.WHITE);
+        nextButton.setOpaque(true);
+        nextButton.setContentAreaFilled(true);
         nextButton.setFocusPainted(false);
-        nextButton.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
+        nextButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(27, 94, 32), 2),
+                BorderFactory.createEmptyBorder(12, 22, 12, 22)
+        ));
         nextButton.setVisible(false);
         nextButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_QUIZ));
 
@@ -115,11 +120,14 @@ public class EnergyChallengePanel extends JPanel implements ResettableScreen {
     private JButton createChoiceButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(170, 46));
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
         button.setFocusPainted(false);
         button.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        button.setBackground(Color.WHITE);
+        button.setBackground(new Color(255, 248, 230));
+        button.setForeground(new Color(110, 67, 0));
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(220, 220, 220)),
+                BorderFactory.createLineBorder(new Color(189, 134, 0), 2),
                 BorderFactory.createEmptyBorder(8, 14, 8, 14)
         ));
         return button;

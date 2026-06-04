@@ -84,8 +84,13 @@ public class RecyclingPanel extends JPanel implements ResettableScreen {
         nextButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         nextButton.setBackground(new Color(46, 125, 50));
         nextButton.setForeground(Color.WHITE);
+        nextButton.setOpaque(true);
+        nextButton.setContentAreaFilled(true);
         nextButton.setFocusPainted(false);
-        nextButton.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
+        nextButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(27, 94, 32), 2),
+                BorderFactory.createEmptyBorder(12, 22, 12, 22)
+        ));
         nextButton.setVisible(false);
         nextButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_ENERGY));
 
@@ -107,11 +112,14 @@ public class RecyclingPanel extends JPanel implements ResettableScreen {
     private JButton createBinButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(180, 46));
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
         button.setFocusPainted(false);
         button.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        button.setBackground(new Color(255, 255, 255));
+        button.setBackground(new Color(236, 248, 236));
+        button.setForeground(new Color(25, 55, 35));
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(190, 220, 190)),
+                BorderFactory.createLineBorder(new Color(76, 132, 84), 2),
                 BorderFactory.createEmptyBorder(8, 14, 8, 14)
         ));
         return button;

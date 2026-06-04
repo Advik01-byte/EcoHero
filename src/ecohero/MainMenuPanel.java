@@ -81,11 +81,16 @@ public class MainMenuPanel extends JPanel implements ResettableScreen {
 
     private JButton createButton(String text, Color color) {
         JButton button = new JButton(text);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
         button.setFocusPainted(false);
         button.setBackground(color);
         button.setForeground(Color.WHITE);
         button.setFont(new Font("SansSerif", Font.BOLD, 16));
-        button.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(color.darker(), 2),
+                BorderFactory.createEmptyBorder(12, 22, 12, 22)
+        ));
         return button;
     }
 

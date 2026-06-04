@@ -55,11 +55,12 @@ public class QuizPanel extends JPanel implements ResettableScreen {
         questionLabel.setMaximumSize(new Dimension(820, 120));
 
         questions = new Question[]{
-                new Question("What does pollution do to the Earth?", new String[]{"Makes it cleaner", "Makes it dirty", "Makes it bigger", "Makes it faster"}, 1),
-                new Question("Which action helps recycling?", new String[]{"Throwing everything together", "Sorting waste into bins", "Burning plastic", "Littering"}, 1),
-                new Question("How can we save electricity?", new String[]{"Leave lights on", "Use more fans for no reason", "Switch off unused appliances", "Keep doors open all night"}, 2),
-                new Question("Which of these is a good environmental habit?", new String[]{"Using reusable bags", "Wasting paper", "Throwing waste on roads", "Cutting many trees"}, 0),
-                new Question("Why should we protect nature?", new String[]{"It keeps Earth healthy", "It makes pollution worse", "It has no use", "It removes fresh air"}, 0)
+                new Question("Which gas from burning petrol and diesel is a major greenhouse gas?", new String[]{"Oxygen", "Carbon dioxide", "Helium", "Hydrogen"}, 1),
+                new Question("Why is it better to separate wet waste from dry waste?", new String[]{"It helps composting and recycling", "It makes the garbage heavier", "It creates more smoke", "It stops all waste from being used"}, 0),
+                new Question("Which action saves the most electricity in daytime?", new String[]{"Leaving lights on for comfort", "Using sunlight instead of switching on lights", "Turning on every fan", "Keeping the TV on as background noise"}, 1),
+                new Question("What is biodegradable waste?", new String[]{"Waste that cannot change ever", "Waste that can be broken down by microorganisms", "Only plastic waste", "Waste that is always poisonous"}, 1),
+                new Question("Which of these helps reduce plastic waste the best?", new String[]{"Using a steel water bottle", "Buying a new plastic bottle every day", "Throwing wrappers on the ground", "Using more plastic plates"}, 0),
+                new Question("Why are trees important in a city?", new String[]{"They make air cleaner and provide shade", "They increase traffic", "They make pollution stronger", "They remove oxygen"}, 0)
         };
 
         optionButtons = new JButton[4];
@@ -83,8 +84,13 @@ public class QuizPanel extends JPanel implements ResettableScreen {
         nextButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         nextButton.setBackground(new Color(46, 125, 50));
         nextButton.setForeground(Color.WHITE);
+        nextButton.setOpaque(true);
+        nextButton.setContentAreaFilled(true);
         nextButton.setFocusPainted(false);
-        nextButton.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
+        nextButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(27, 94, 32), 2),
+                BorderFactory.createEmptyBorder(12, 22, 12, 22)
+        ));
         nextButton.setVisible(false);
         nextButton.addActionListener(e -> {
             if (answered) {
@@ -112,11 +118,14 @@ public class QuizPanel extends JPanel implements ResettableScreen {
         button.setAlignmentX(CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(700, 48));
         button.setPreferredSize(new Dimension(700, 48));
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
         button.setFocusPainted(false);
         button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setBackground(Color.WHITE);
+        button.setBackground(new Color(240, 247, 255));
+        button.setForeground(new Color(28, 42, 56));
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(208, 225, 245)),
+                BorderFactory.createLineBorder(new Color(90, 135, 190), 2),
                 BorderFactory.createEmptyBorder(8, 14, 8, 14)
         ));
         return button;
@@ -182,7 +191,6 @@ public class QuizPanel extends JPanel implements ResettableScreen {
             currentIndex++;
             updateQuestion();
         } else {
-            controller.addScore(10);
             controller.completeSection(3);
             controller.showScreen(EcoHeroFrame.SCREEN_RESULT);
         }
