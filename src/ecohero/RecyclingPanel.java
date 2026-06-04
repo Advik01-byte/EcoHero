@@ -21,6 +21,7 @@ public class RecyclingPanel extends JPanel implements ResettableScreen {
     private final JButton nextButton;
     private int currentIndex;
     private boolean solved;
+    private boolean perfectRun = true;
 
     public RecyclingPanel(GameController controller) {
         this.controller = controller;
@@ -118,28 +119,41 @@ public class RecyclingPanel extends JPanel implements ResettableScreen {
             controller.addScore(5);
             feedbackLabel.setText("Correct! " + correctHint);
             feedbackLabel.setForeground(new Color(27, 94, 32));
-            currentIndex++;
-            if (currentIndex < items.length) {
-                updateItem();
-            } else {
-                solved = true;
-                controller.addScore(10);
-                controller.completeSection(1);
-                disableButtons();
-                feedbackLabel.setText("Excellent! You sorted all the waste correctly.");
-                nextButton.setVisible(true);
-                itemLabel.setText("Recycling complete");
-                itemLabel.setIcon(ImageFactory.createRecyclingIcon(160, 120));
-            }
         } else {
+            perfectRun = false;
             feedbackLabel.setText("Try again. That item belongs in a different bin.");
             feedbackLabel.setForeground(new Color(183, 28, 28));
+        }
+
+        disableButtons();
+        javax.swing.Timer timer = new javax.swing.Timer(450, e -> advanceItem());
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    private void advanceItem() {
+        currentIndex++;
+        if (currentIndex < items.length) {
+            updateItem();
+            enableButtons();
+        } else {
+            solved = true;
+            if (perfectRun) {
+                controller.addScore(10);
+            }
+            controller.completeSection(2);
+            feedbackLabel.setText(perfectRun
+                    ? "Excellent! You sorted all the waste correctly."
+                    : "Recycling complete.");
+            itemLabel.setText("<html><div style='text-align:center;'>Recycling complete</div></html>");
+            itemLabel.setIcon(ImageFactory.createRecyclingIcon(160, 120));
+            nextButton.setVisible(true);
         }
     }
 
     private void updateItem() {
         WasteItem current = items[currentIndex];
-        itemLabel.setText(current.getName());
+        itemLabel.setText("<html><div style='text-align:center;'>" + current.getName() + "</div></html>");
         itemLabel.setIcon(current.getImage());
     }
 
@@ -149,13 +163,18 @@ public class RecyclingPanel extends JPanel implements ResettableScreen {
         }
     }
 
+    private void enableButtons() {
+        for (JButton button : binButtons) {
+            button.setEnabled(true);
+        }
+    }
+
     @Override
     public void resetScreen() {
         currentIndex = 0;
         solved = false;
-        for (JButton button : binButtons) {
-            button.setEnabled(true);
-        }
+        perfectRun = true;
+        enableButtons();
         feedbackLabel.setText("Sort each item into the correct bin.");
         feedbackLabel.setForeground(new Color(27, 94, 32));
         nextButton.setVisible(false);

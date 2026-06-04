@@ -52,19 +52,23 @@ public class MainMenuPanel extends JPanel implements ResettableScreen {
         info.setMaximumSize(new Dimension(760, 170));
         info.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        JButton startButton = createButton("Start Adventure", new Color(46, 125, 50));
+        JButton learnButton = createButton("Learn", new Color(46, 125, 50));
+        JButton startButton = createButton("Start Adventure", new Color(2, 119, 189));
         JButton howToPlayButton = createButton("How to Play", new Color(2, 119, 189));
 
+        learnButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_LEARN));
         startButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_POLLUTION));
         howToPlayButton.addActionListener(e -> javax.swing.JOptionPane.showMessageDialog(
                 this,
-                "Read the information, answer the questions, sort the waste, complete the energy challenge, and finish the quiz.",
+                "Use Learn to read the slideshow, or Start Adventure to begin the game right away. Then answer questions about pollution, sort the waste, complete the energy challenge, and finish the quiz.",
                 "How to Play",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE
         ));
 
         JPanel buttonRow = new JPanel();
         buttonRow.setOpaque(false);
+        buttonRow.add(learnButton);
+        buttonRow.add(Box.createHorizontalStrut(14));
         buttonRow.add(startButton);
         buttonRow.add(Box.createHorizontalStrut(14));
         buttonRow.add(howToPlayButton);

@@ -47,12 +47,14 @@ public class QuizPanel extends JPanel implements ResettableScreen {
         questionCountLabel.setAlignmentX(CENTER_ALIGNMENT);
         questionCountLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         questionCountLabel.setForeground(new Color(66, 66, 66));
+        questionCountLabel.setHorizontalAlignment(JLabel.CENTER);
+        questionCountLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24));
 
         questionLabel.setAlignmentX(CENTER_ALIGNMENT);
         questionLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         questionLabel.setForeground(new Color(38, 50, 56));
         questionLabel.setHorizontalAlignment(JLabel.CENTER);
-        questionLabel.setMaximumSize(new Dimension(820, 120));
+        questionLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
         questions = new Question[]{
                 new Question("Which gas from burning petrol and diesel is a major greenhouse gas?", new String[]{"Oxygen", "Carbon dioxide", "Helium", "Hydrogen"}, 1),
@@ -157,7 +159,7 @@ public class QuizPanel extends JPanel implements ResettableScreen {
 
     private void updateQuestion() {
         Question current = questions[currentIndex];
-        questionCountLabel.setText("Question " + (currentIndex + 1) + " of " + questions.length);
+        questionCountLabel.setText("<html><div style='text-align:center;'>Question " + (currentIndex + 1) + " of " + questions.length + "</div></html>");
         questionLabel.setText("<html><div style='text-align:center;'>" + current.getPrompt() + "</div></html>");
         String[] options = current.getOptions();
         for (int i = 0; i < optionButtons.length; i++) {
@@ -175,7 +177,7 @@ public class QuizPanel extends JPanel implements ResettableScreen {
             currentIndex++;
             updateQuestion();
         } else {
-            controller.completeSection(3);
+            controller.completeSection(4);
             controller.showScreen(EcoHeroFrame.SCREEN_RESULT);
         }
     }

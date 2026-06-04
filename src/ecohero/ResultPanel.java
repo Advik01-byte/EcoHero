@@ -71,8 +71,9 @@ public class ResultPanel extends JPanel implements ResettableScreen {
 
     public void refreshResult() {
         int score = controller.getGameState().getScore();
+        int maxScore = controller.getGameState().getMaxScore();
         int progress = controller.getGameState().getProgressPercent();
-        resultLabel.setText("Final Score: " + score + " points");
+        resultLabel.setText("Final Score: " + score + "/" + maxScore + " points");
         messageArea.setText(
                 "You completed the EcoHero project and learned about pollution, recycling, and saving energy.\n\n"
                         + "Progress completed: " + progress + "%\n"

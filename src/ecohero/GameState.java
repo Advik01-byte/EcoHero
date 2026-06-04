@@ -1,7 +1,8 @@
 package ecohero;
 
 public class GameState {
-    public static final int TOTAL_SECTIONS = 4;
+    public static final int TOTAL_SECTIONS = 5;
+    public static final int MAX_SCORE = 188;
 
     private int score;
     private final boolean[] completedSections = new boolean[TOTAL_SECTIONS];
@@ -43,5 +44,9 @@ public class GameState {
 
     public int getProgressPercent() {
         return (int) Math.round((getCompletedCount() * 100.0) / TOTAL_SECTIONS);
+    }
+
+    public int getMaxScore() {
+        return MAX_SCORE;
     }
 }

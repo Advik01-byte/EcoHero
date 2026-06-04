@@ -55,7 +55,7 @@ javac -d out src/ecohero/*.java
 java -cp out ecohero.Main
 ```
 
-The app does not need any external image files because the pictures are created inside the Java program.
+The app uses local image files stored in the `assets/` folder, so it can run without downloading images at startup.
 
 ## Project Files
 
@@ -69,6 +69,10 @@ The app does not need any external image files because the pictures are created 
 - `src/ecohero/QuizPanel.java` - Final quiz screen
 - `src/ecohero/ResultPanel.java` - Final score screen
 - `src/ecohero/ImageFactory.java` - Creates the pictures used in the app
+
+## Image Sources
+
+The pictures were downloaded from internet sources and saved in the local `assets/` folder. This means the app can run offline after the files are placed in the project.
 
 ## What the Project Teaches
 

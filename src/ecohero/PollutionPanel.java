@@ -15,9 +15,13 @@ import java.awt.Font;
 public class PollutionPanel extends JPanel implements ResettableScreen {
     private final GameController controller;
     private final JButton[] answerButtons;
+    private final Question[] questions;
     private final JLabel feedbackLabel = new JLabel("Choose the correct answer to continue.");
+    private final JLabel questionCountLabel = new JLabel();
+    private final JLabel questionLabel = new JLabel();
     private final JButton nextButton;
-    private boolean solved;
+    private int currentIndex;
+    private boolean answered;
 
     public PollutionPanel(GameController controller) {
         this.controller = controller;
@@ -48,27 +52,65 @@ public class PollutionPanel extends JPanel implements ResettableScreen {
         explanation.setAlignmentX(CENTER_ALIGNMENT);
         explanation.setMaximumSize(new Dimension(820, 120));
 
-        JLabel question = new JLabel("Which of these causes pollution?");
-        question.setAlignmentX(CENTER_ALIGNMENT);
-        question.setFont(new Font("SansSerif", Font.BOLD, 20));
-        question.setForeground(new Color(38, 50, 56));
+        questionCountLabel.setAlignmentX(CENTER_ALIGNMENT);
+        questionCountLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        questionCountLabel.setForeground(new Color(66, 66, 66));
+        questionCountLabel.setHorizontalAlignment(JLabel.CENTER);
+        questionCountLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 24));
 
-        answerButtons = new JButton[]{
-                createAnswerButton("Smoke from vehicles and factories"),
-                createAnswerButton("Planting more trees"),
-                createAnswerButton("Using clean water carefully")
+        questionLabel.setAlignmentX(CENTER_ALIGNMENT);
+        questionLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        questionLabel.setForeground(new Color(38, 50, 56));
+        questionLabel.setHorizontalAlignment(JLabel.CENTER);
+        questionLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 56));
+
+        questions = new Question[]{
+                new Question("Which of these causes pollution?", new String[]{
+                        "Smoke from vehicles and factories",
+                        "Planting more trees",
+                        "Using clean water carefully"
+                }, 0),
+                new Question("What kind of pollution comes from loud sounds?", new String[]{
+                        "Air pollution",
+                        "Noise pollution",
+                        "Water pollution"
+                }, 1),
+                new Question("Which habit helps reduce land pollution?", new String[]{
+                        "Throwing waste on the road",
+                        "Burning plastic in the open",
+                        "Putting waste in the bin"
+                }, 2),
+                new Question("What should we do with plastic bottles after using them?", new String[]{
+                        "Recycle them",
+                        "Throw them into rivers",
+                        "Bury them in the garden"
+                }, 0),
+                new Question("What kind of pollution is caused by dirty water from factories?", new String[]{
+                        "Water pollution",
+                        "Noise pollution",
+                        "Light pollution"
+                }, 0),
+                new Question("Which action helps keep the air cleaner?", new String[]{
+                        "Planting trees",
+                        "Burning garbage near homes",
+                        "Using more cars for short trips"
+                }, 0)
         };
 
-        answerButtons[0].addActionListener(e -> handleAnswer(true, "Correct! Smoke from vehicles and factories causes air pollution."));
-        answerButtons[1].addActionListener(e -> handleAnswer(false, "Not quite. Planting trees helps reduce pollution."));
-        answerButtons[2].addActionListener(e -> handleAnswer(false, "Not quite. Using water carefully is good for the environment."));
+        answerButtons = new JButton[]{
+                createAnswerButton("Option 1"),
+                createAnswerButton("Option 2"),
+                createAnswerButton("Option 3")
+        };
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        for (JButton button : answerButtons) {
-            button.setAlignmentX(CENTER_ALIGNMENT);
-            buttonPanel.add(button);
+        for (int i = 0; i < answerButtons.length; i++) {
+            final int optionIndex = i;
+            answerButtons[i].addActionListener(e -> handleAnswer(optionIndex));
+            answerButtons[i].setAlignmentX(CENTER_ALIGNMENT);
+            buttonPanel.add(answerButtons[i]);
             buttonPanel.add(Box.createVerticalStrut(10));
         }
 
@@ -81,18 +123,25 @@ public class PollutionPanel extends JPanel implements ResettableScreen {
         ButtonStyles.apply(nextButton, new Color(46, 125, 50), Color.WHITE, new Color(27, 94, 32));
         ButtonStyles.setFont(nextButton, new Font("SansSerif", Font.BOLD, 16));
         nextButton.setVisible(false);
-        nextButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_RECYCLING));
+        nextButton.addActionListener(e -> {
+            if (answered) {
+                nextStep();
+            }
+        });
 
         add(title);
         add(image);
         add(explanation);
         add(Box.createVerticalStrut(8));
-        add(question);
+        add(questionCountLabel);
+        add(questionLabel);
         add(Box.createVerticalStrut(12));
         add(buttonPanel);
         add(feedbackLabel);
         add(Box.createVerticalStrut(8));
         add(nextButton);
+
+        updateQuestion();
     }
 
     private JButton createAnswerButton(String text) {
@@ -105,31 +154,71 @@ public class PollutionPanel extends JPanel implements ResettableScreen {
         return button;
     }
 
-    private void handleAnswer(boolean correct, String message) {
-        if (solved) {
+    private void handleAnswer(int optionIndex) {
+        if (answered || currentIndex >= questions.length) {
             return;
         }
-        feedbackLabel.setText(message);
-        feedbackLabel.setForeground(correct ? new Color(27, 94, 32) : new Color(183, 28, 28));
+
+        Question current = questions[currentIndex];
+        boolean correct = current.getCorrectIndex() == optionIndex;
+        answered = true;
+
         if (correct) {
-            solved = true;
             controller.addScore(15);
-            controller.completeSection(0);
-            for (JButton button : answerButtons) {
-                button.setEnabled(false);
-            }
-            nextButton.setVisible(true);
+            feedbackLabel.setText("Correct!");
+            feedbackLabel.setForeground(new Color(27, 94, 32));
+        } else {
+            feedbackLabel.setText("Incorrect. The correct answer was: " + current.getOptions()[current.getCorrectIndex()]);
+            feedbackLabel.setForeground(new Color(183, 28, 28));
+        }
+
+        disableButtons();
+        nextButton.setVisible(true);
+        nextButton.setText(currentIndex == questions.length - 1 ? "Continue to Recycling Game" : "Next Question");
+    }
+
+    private void disableButtons() {
+        for (JButton button : answerButtons) {
+            button.setEnabled(false);
+        }
+    }
+
+    private void enableButtons() {
+        for (JButton button : answerButtons) {
+            button.setEnabled(true);
+        }
+    }
+
+    private void updateQuestion() {
+        Question current = questions[currentIndex];
+        questionCountLabel.setText("<html><div style='text-align:center;'>Question " + (currentIndex + 1) + " of " + questions.length + "</div></html>");
+        questionLabel.setText("<html><div style='text-align:center;'>" + current.getPrompt() + "</div></html>");
+        String[] options = current.getOptions();
+        for (int i = 0; i < answerButtons.length; i++) {
+            answerButtons[i].setText(options[i]);
+        }
+        feedbackLabel.setText("Choose the correct answer to continue.");
+        feedbackLabel.setForeground(new Color(27, 94, 32));
+        nextButton.setVisible(false);
+        enableButtons();
+        answered = false;
+    }
+
+    private void nextStep() {
+        if (currentIndex < questions.length - 1) {
+            currentIndex++;
+            updateQuestion();
+        } else {
+            controller.addScore(10);
+            controller.completeSection(1);
+            controller.showScreen(EcoHeroFrame.SCREEN_RECYCLING);
         }
     }
 
     @Override
     public void resetScreen() {
-        solved = false;
-        feedbackLabel.setText("Choose the correct answer to continue.");
-        feedbackLabel.setForeground(new Color(27, 94, 32));
-        for (JButton button : answerButtons) {
-            button.setEnabled(true);
-        }
-        nextButton.setVisible(false);
+        currentIndex = 0;
+        answered = false;
+        updateQuestion();
     }
 }

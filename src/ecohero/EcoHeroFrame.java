@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class EcoHeroFrame extends JFrame implements GameController {
     public static final String SCREEN_MENU = "menu";
+    public static final String SCREEN_LEARN = "learn";
     public static final String SCREEN_POLLUTION = "pollution";
     public static final String SCREEN_RECYCLING = "recycling";
     public static final String SCREEN_ENERGY = "energy";
@@ -101,6 +102,7 @@ public class EcoHeroFrame extends JFrame implements GameController {
 
     private void registerScreens() {
         MainMenuPanel menuPanel = new MainMenuPanel(this);
+        LearnPanel learnPanel = new LearnPanel(this);
         PollutionPanel pollutionPanel = new PollutionPanel(this);
         RecyclingPanel recyclingPanel = new RecyclingPanel(this);
         EnergyChallengePanel energyPanel = new EnergyChallengePanel(this);
@@ -108,6 +110,7 @@ public class EcoHeroFrame extends JFrame implements GameController {
         resultPanel = new ResultPanel(this);
 
         addScreen(SCREEN_MENU, menuPanel);
+        addScreen(SCREEN_LEARN, learnPanel);
         addScreen(SCREEN_POLLUTION, pollutionPanel);
         addScreen(SCREEN_RECYCLING, recyclingPanel);
         addScreen(SCREEN_ENERGY, energyPanel);

@@ -21,6 +21,7 @@ public class EnergyChallengePanel extends JPanel implements ResettableScreen {
     private final JButton nextButton;
     private int currentIndex;
     private boolean solved;
+    private boolean perfectRun = true;
 
     public EnergyChallengePanel(GameController controller) {
         this.controller = controller;
@@ -126,27 +127,38 @@ public class EnergyChallengePanel extends JPanel implements ResettableScreen {
             controller.addScore(5);
             feedbackLabel.setText(current.getExplanation());
             feedbackLabel.setForeground(new Color(27, 94, 32));
-            currentIndex++;
-            if (currentIndex < items.length) {
-                updateItem();
-            } else {
-                solved = true;
-                controller.addScore(10);
-                controller.completeSection(2);
-                disableButtons();
-                statementLabel.setText("Energy challenge complete");
-                statementLabel.setIcon(ImageFactory.createEnergyIcon(140, 110));
-                nextButton.setVisible(true);
-            }
         } else {
+            perfectRun = false;
             feedbackLabel.setText("Try again. Think about whether this saves or wastes energy.");
             feedbackLabel.setForeground(new Color(183, 28, 28));
+        }
+
+        disableButtons();
+        javax.swing.Timer timer = new javax.swing.Timer(450, e -> advanceItem());
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    private void advanceItem() {
+        currentIndex++;
+        if (currentIndex < items.length) {
+            updateItem();
+            enableButtons();
+        } else {
+            solved = true;
+            if (perfectRun) {
+                controller.addScore(10);
+            }
+            controller.completeSection(3);
+            statementLabel.setText("<html><div style='text-align:center;'>Energy challenge complete</div></html>");
+            statementLabel.setIcon(ImageFactory.createEnergyIcon(140, 110));
+            nextButton.setVisible(true);
         }
     }
 
     private void updateItem() {
         ChallengeItem current = items[currentIndex];
-        statementLabel.setText(current.getStatement());
+        statementLabel.setText("<html><div style='text-align:center;'>" + current.getStatement() + "</div></html>");
         statementLabel.setIcon(current.getImage());
         statementLabel.setHorizontalTextPosition(JLabel.CENTER);
         statementLabel.setVerticalTextPosition(JLabel.BOTTOM);
@@ -160,13 +172,18 @@ public class EnergyChallengePanel extends JPanel implements ResettableScreen {
         }
     }
 
+    private void enableButtons() {
+        for (JButton button : choiceButtons) {
+            button.setEnabled(true);
+        }
+    }
+
     @Override
     public void resetScreen() {
         currentIndex = 0;
         solved = false;
-        for (JButton button : choiceButtons) {
-            button.setEnabled(true);
-        }
+        perfectRun = true;
+        enableButtons();
         nextButton.setVisible(false);
         updateItem();
     }
