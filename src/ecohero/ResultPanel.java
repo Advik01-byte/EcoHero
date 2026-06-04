@@ -44,30 +44,14 @@ public class ResultPanel extends JPanel implements ResettableScreen {
 
         JButton playAgain = new JButton("Play Again");
         playAgain.setAlignmentX(CENTER_ALIGNMENT);
-        playAgain.setFont(new Font("SansSerif", Font.BOLD, 16));
-        playAgain.setBackground(new Color(46, 125, 50));
-        playAgain.setForeground(Color.WHITE);
-        playAgain.setOpaque(true);
-        playAgain.setContentAreaFilled(true);
-        playAgain.setFocusPainted(false);
-        playAgain.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(27, 94, 32), 2),
-                BorderFactory.createEmptyBorder(12, 22, 12, 22)
-        ));
+        ButtonStyles.apply(playAgain, new Color(46, 125, 50), Color.WHITE, new Color(27, 94, 32));
+        ButtonStyles.setFont(playAgain, new Font("SansSerif", Font.BOLD, 16));
         playAgain.addActionListener(e -> controller.restartGame());
 
         JButton menuButton = new JButton("Back to Main Menu");
         menuButton.setAlignmentX(CENTER_ALIGNMENT);
-        menuButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        menuButton.setBackground(new Color(2, 119, 189));
-        menuButton.setForeground(Color.WHITE);
-        menuButton.setOpaque(true);
-        menuButton.setContentAreaFilled(true);
-        menuButton.setFocusPainted(false);
-        menuButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(1, 87, 155), 2),
-                BorderFactory.createEmptyBorder(12, 22, 12, 22)
-        ));
+        ButtonStyles.apply(menuButton, new Color(2, 119, 189), Color.WHITE, new Color(1, 87, 155));
+        ButtonStyles.setFont(menuButton, new Font("SansSerif", Font.BOLD, 16));
         menuButton.addActionListener(e -> controller.showScreen(EcoHeroFrame.SCREEN_MENU));
 
         JPanel buttonRow = new JPanel();

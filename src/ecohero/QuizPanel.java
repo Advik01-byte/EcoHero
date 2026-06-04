@@ -81,16 +81,8 @@ public class QuizPanel extends JPanel implements ResettableScreen {
 
         nextButton = new JButton("Finish Project");
         nextButton.setAlignmentX(CENTER_ALIGNMENT);
-        nextButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        nextButton.setBackground(new Color(46, 125, 50));
-        nextButton.setForeground(Color.WHITE);
-        nextButton.setOpaque(true);
-        nextButton.setContentAreaFilled(true);
-        nextButton.setFocusPainted(false);
-        nextButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(27, 94, 32), 2),
-                BorderFactory.createEmptyBorder(12, 22, 12, 22)
-        ));
+        ButtonStyles.apply(nextButton, new Color(46, 125, 50), Color.WHITE, new Color(27, 94, 32));
+        ButtonStyles.setFont(nextButton, new Font("SansSerif", Font.BOLD, 16));
         nextButton.setVisible(false);
         nextButton.addActionListener(e -> {
             if (answered) {
@@ -118,16 +110,8 @@ public class QuizPanel extends JPanel implements ResettableScreen {
         button.setAlignmentX(CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(700, 48));
         button.setPreferredSize(new Dimension(700, 48));
-        button.setOpaque(true);
-        button.setContentAreaFilled(true);
-        button.setFocusPainted(false);
-        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setBackground(new Color(240, 247, 255));
-        button.setForeground(new Color(28, 42, 56));
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(90, 135, 190), 2),
-                BorderFactory.createEmptyBorder(8, 14, 8, 14)
-        ));
+        ButtonStyles.apply(button, new Color(240, 247, 255), new Color(28, 42, 56), new Color(90, 135, 190));
+        ButtonStyles.setFont(button, new Font("SansSerif", Font.PLAIN, 16));
         return button;
     }
 
