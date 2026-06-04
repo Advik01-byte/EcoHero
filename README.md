@@ -1,14 +1,18 @@
 # EcoHero: Save the Earth
 
-EcoHero is a Java-based educational game where the player becomes an environmental hero and learns how to protect the planet through interactive challenges.
+**Science Holiday Homework Project for Grade 6 ICSE**
 
-The project combines learning and gameplay to make environmental awareness more engaging, especially for students and beginners.
+EcoHero: Save the Earth is a Java-based educational game made for a Grade 6 ICSE science holiday homework project. In this project, the player becomes an environmental hero and learns how to protect the Earth through fun and interactive activities.
 
-## Overview
+The game is designed to make science learning simple, interesting, and engaging.
 
-In EcoHero, the user moves through a series of screens and activities that teach important environmental topics while earning points for good choices and correct answers.
+## Project Aim
 
-The goal is to make the experience feel like a game while still delivering useful information about sustainability, recycling, pollution, and energy conservation.
+The aim of this project is to teach students about pollution, recycling, and energy saving in a game-like format.
+
+## Main Idea
+
+The user starts from the main menu and moves through different sections of the game. Each section helps the player learn something important about protecting the environment.
 
 ## Features
 
@@ -22,35 +26,59 @@ The goal is to make the experience feel like a game while still delivering usefu
 ## Java Concepts Used
 
 - Multiple panels using `CardLayout`
-- Buttons for navigation and interaction
-- Images for a more engaging interface
-- Progress bar to show advancement
-- Score tracking to reward correct actions
+- Buttons for navigation and actions
+- Images for a better look
+- Progress bar to show progress
+- Score tracking to count points
 
-## Why It Stands Out
+## How to Run the App
 
-- Educational and interactive
-- Feels like a game instead of a plain lesson
-- Encourages players to think about real-world environmental choices
-- Simple enough for a Java project, but still creative and meaningful
+If you have the Java files for this project, follow these steps:
 
-## Project Idea
+1. Install Java JDK on your computer.
+2. Open the project in an IDE such as IntelliJ IDEA, Eclipse, or VS Code.
+3. Make sure the source files are inside the `src` folder.
+4. Find the class that contains `public static void main(String[] args)`.
+5. Run that class to start the app.
 
-The player starts on the main menu, learns about pollution, completes recycling and energy-saving activities, and finishes with a quiz. Each section contributes to the overall score and helps the user become a true EcoHero.
+### If You Are Using the Command Line
 
-## Intended Audience
+1. Open the project folder in terminal or Command Prompt.
+2. Compile the Java files:
 
-- Students
-- Beginners learning Java GUI development
-- Anyone interested in an educational game about the environment
+```bash
+javac *.java
+```
 
-## Future Improvements
+3. Run the main class:
 
-- Add sound effects and background music
-- Include more questions and mini-games
-- Add animations for transitions between panels
-- Save high scores between sessions
+```bash
+java Main
+```
 
-## Summary
+If your main file has a different name, replace `Main` with the correct class name.
 
-EcoHero: Save the Earth is an educational Java game that teaches environmental responsibility through fun, interactive gameplay.
+## What the Project Teaches
+
+- Why pollution is harmful
+- Why recycling is important
+- How to save electricity
+- How to make good choices for the environment
+
+## Why This Project Stands Out
+
+- It is educational and interactive
+- It feels like a game, not just a lesson
+- It helps students learn science in a fun way
+- It connects classroom learning with real-life environmental awareness
+
+## Project Type
+
+- Subject: Science
+- Class: Grade 6
+- Board: ICSE
+- Project Style: Educational Java Game
+
+## Conclusion
+
+EcoHero: Save the Earth is a simple but creative science project that helps students learn about protecting the environment through an interactive Java game.
