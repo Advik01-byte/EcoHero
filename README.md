@@ -33,13 +33,12 @@ The user starts from the main menu and moves through different sections of the g
 
 ## How to Run the App
 
-If you have the Java files for this project, follow these steps:
+If you want to run this project on your computer, follow these steps:
 
 1. Install Java JDK on your computer.
 2. Open the project in an IDE such as IntelliJ IDEA, Eclipse, or VS Code.
-3. Make sure the source files are inside the `src` folder.
-4. Find the class that contains `public static void main(String[] args)`.
-5. Run that class to start the app.
+3. Make sure the Java files are inside `src/ecohero`.
+4. Run the `ecohero.Main` class.
 
 ### If You Are Using the Command Line
 
@@ -47,16 +46,29 @@ If you have the Java files for this project, follow these steps:
 2. Compile the Java files:
 
 ```bash
-javac *.java
+javac -d out src/ecohero/*.java
 ```
 
 3. Run the main class:
 
 ```bash
-java Main
+java -cp out ecohero.Main
 ```
 
-If your main file has a different name, replace `Main` with the correct class name.
+The app does not need any external image files because the pictures are created inside the Java program.
+
+## Project Files
+
+- `src/ecohero/Main.java` - Starts the app
+- `src/ecohero/EcoHeroFrame.java` - Main window and panel manager
+- `src/ecohero/GameState.java` - Stores score and progress
+- `src/ecohero/MainMenuPanel.java` - Main menu screen
+- `src/ecohero/PollutionPanel.java` - Pollution learning screen
+- `src/ecohero/RecyclingPanel.java` - Recycling game screen
+- `src/ecohero/EnergyChallengePanel.java` - Energy-saving challenge
+- `src/ecohero/QuizPanel.java` - Final quiz screen
+- `src/ecohero/ResultPanel.java` - Final score screen
+- `src/ecohero/ImageFactory.java` - Creates the pictures used in the app
 
 ## What the Project Teaches
 
